@@ -1,4 +1,4 @@
 node_modules/
 httpd-vhosts.conf
 *.env
-vhosts/
+**/vhosts/*.conf
