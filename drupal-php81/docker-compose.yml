@@ -1,0 +1,33 @@
+name: drupal-php81
+
+volumes:
+  www:
+  ssh:
+  vscode-server:
+  mysql:
+
+services:
+  drupal:
+    hostname: drupal-php81
+    build: .
+    env_file: variables.env
+    volumes:
+      - www:/var/www
+      - ssh:/root/.ssh
+      - vscode-server:/root/.vscode-server
+      - ./vhosts:/etc/apache2/vhosts
+    ports:
+      - 8081:80
+      - 2281:22
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+    command: --transaction-isolation=READ-COMMITTED
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - 3081:3306

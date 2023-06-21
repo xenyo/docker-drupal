@@ -4,20 +4,32 @@ const walkSync = require('walk-sync');
 
 const contexts = [
   {
-    name: 'php81',
+    name: 'drupal-php81',
     php_version: '8.1',
+    apache_port: 8081,
+    mariadb_port: 3081,
+    ssh_port: 2281,
   },
   {
-    name: 'php80',
+    name: 'drupal-php80',
     php_version: '8.0',
+    apache_port: 8080,
+    mariadb_port: 3080,
+    ssh_port: 2280,
   },
   {
-    name: 'php74',
+    name: 'drupal-php74',
     php_version: '7.4',
+    apache_port: 8074,
+    mariadb_port: 3074,
+    ssh_port: 2274,
   },
   {
-    name: 'php73',
+    name: 'drupal-php73',
     php_version: '7.3',
+    apache_port: 8073,
+    mariadb_port: 3073,
+    ssh_port: 2273,
   },
 ];
 

@@ -42,24 +42,24 @@ RUN apt-get install -y \
 # Install php
 RUN apt-get update
 RUN apt-get install -y \
-  php8.0 \
-  php8.0-apcu \
-  php8.0-bcmath \
-  php8.0-bz2 \
-  php8.0-cli \
-  php8.0-common \
-  php8.0-curl \
-  php8.0-fpm \
-  php8.0-gd \
-  php8.0-iconv \
-  php8.0-intl \
-  php8.0-mbstring \
-  php8.0-mysql \
-  php8.0-opcache \
-  php8.0-readline \
-  php8.0-xdebug \
-  php8.0-xml \
-  php8.0-zip
+  php7.3 \
+  php7.3-apcu \
+  php7.3-bcmath \
+  php7.3-bz2 \
+  php7.3-cli \
+  php7.3-common \
+  php7.3-curl \
+  php7.3-fpm \
+  php7.3-gd \
+  php7.3-iconv \
+  php7.3-intl \
+  php7.3-mbstring \
+  php7.3-mysql \
+  php7.3-opcache \
+  php7.3-readline \
+  php7.3-xdebug \
+  php7.3-xml \
+  php7.3-zip
 
 # Install node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash
@@ -91,14 +91,13 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY apache2.conf /etc/apache2/apache2.conf
 RUN a2enmod proxy_fcgi
 RUN a2enmod rewrite
-RUN a2enconf php8.0-fpm
+RUN a2enconf php7.3-fpm
 RUN chmod ug+w /var/www
-RUN rm -r /var/www/html
 RUN service apache2 start
 
 # Configure php
-COPY php.ini /etc/php/8.0/fpm/conf.d/30-docker.ini
-RUN service php8.0-fpm start
+COPY php.ini /etc/php/7.3/fpm/conf.d/30-docker.ini
+RUN service php7.3-fpm start
 
 # Configure git
 RUN git config --global init.defaultBranch main
@@ -117,4 +116,5 @@ RUN echo 'eval "$(direnv hook bash)"' >> /root/.bashrc
 RUN usermod -a -G www-data root
 RUN usermod -a -G root www-data
 
+WORKDIR /var/www
 ENTRYPOINT [ "supervisord" ]

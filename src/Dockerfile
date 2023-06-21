@@ -93,7 +93,6 @@ RUN a2enmod proxy_fcgi
 RUN a2enmod rewrite
 RUN a2enconf php{{php_version}}-fpm
 RUN chmod ug+w /var/www
-RUN rm -r /var/www/html
 RUN service apache2 start
 
 # Configure php
@@ -117,4 +116,5 @@ RUN echo 'eval "$(direnv hook bash)"' >> /root/.bashrc
 RUN usermod -a -G www-data root
 RUN usermod -a -G root www-data
 
+WORKDIR /var/www
 ENTRYPOINT [ "supervisord" ]

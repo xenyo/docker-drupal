@@ -4,7 +4,7 @@ A full-featured Docker environment for developing Drupal projects.
 
 ## Features
 
-- Separate container per PHP version
+- Separate Docker Compose project per PHP version
 - Multiple virtual hosts per container
 
 ## Prerequisites
@@ -22,6 +22,8 @@ git clone git@github.com:xenyo/docker-drupal.git
 
 ### 2. Create variables.env and enter your personal details
 
+For example, create `drupal-php81/variables.env`:
+
 ```
 GIT_AUTHOR_NAME=Your Name
 GIT_AUTHOR_EMAIL=example@example.com
@@ -32,16 +34,17 @@ GIT_AUTHOR_EMAIL=example@example.com
 For example, to start the PHP 8.1 container:
 
 ```
-docker compose up -d php81
+cd drupal-php81
+docker compose up -d
 ```
 
 ### 4. Open the container in the terminal
 
 ```
-docker compose exec php81 bash
+docker compose exec drupal bash
 ```
 
-### 5. Generate SSH keys and add to your GitHub account
+### 5. Generate SSH keys in the container and add to your GitHub account
 
 ```
 ssh-keygen
@@ -67,7 +70,7 @@ git clone git@github.com:xenyo/example.git
 
 ### 7. Add virtual hosts
 
-For example, create `containers/php81/vhosts/example.conf`:
+For example, create `drupal-php81/vhosts/example.conf`:
 
 ```
 <VirtualHost *:80>
@@ -79,8 +82,35 @@ For example, create `containers/php81/vhosts/example.conf`:
 Restart the container for the new virtual hosts to take effect.
 
 ```
-docker compose restart php81
+docker compose restart drupal
 ```
+
+### 8. Edit your hosts file
+
+For example, add the following to your hosts file:
+
+```
+127.0.0.1 example
+```
+
+### 9. Open the site in the browser
+
+For example, open `http://example:8081` to confirm everything is set up correctly.
+
+## Opening the container in VS Code
+
+1. Install the *Dev Containers* extension.
+2. Open the Remote Explorer view and select Dev Containers.
+3. Right click your container and select Attach in Current Window.
+
+## Default ports
+
+| | Apache | MariaDB | SSH |
+| - | - | - | - |
+| drupal-php81 | 8081 | 3081 | 2081 |
+| drupal-php80 | 8080 | 3080 | 2080 |
+| drupal-php74 | 8074 | 3074 | 2074 |
+| drupal-php73 | 8073 | 3073 | 2073 |
 
 ## Updating
 
@@ -93,14 +123,15 @@ git pull
 Rebuild containers. For example, to rebuild the PHP 8.1 container:
 
 ```
-docker compose up -d php81 --build
+cd drupal-php81
+docker compose up -d --build
 ```
 
 Your project code and database will not be affected.
 
 ## Development
 
-The Node.js script `index.js` generates files from `src` to `containers/*`.
+The Node.js script `index.js` generates files from `src` to `drupal-php*`.
 
 Install npm dependencies:
 
