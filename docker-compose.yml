@@ -1,0 +1,69 @@
+name: docker-drupal
+
+volumes:
+  www:
+  ssh:
+  vscode-server:
+  mysql:
+
+services:
+  php73:
+    hostname: php73
+    build: containers/php73
+    env_file: variables.env
+    volumes:
+      - www:/var/www
+      - ssh:/root/.ssh
+      - vscode-server:/root/.vscode-server
+      - ./containers/php73/vhosts:/etc/apache2/vhosts
+    ports:
+      - 8073:80
+    depends_on:
+      - mariadb
+  php74:
+    hostname: php74
+    build: containers/php74
+    env_file: variables.env
+    volumes:
+      - www:/var/www
+      - ssh:/root/.ssh
+      - vscode-server:/root/.vscode-server
+      - ./containers/php74/vhosts:/etc/apache2/vhosts
+    ports:
+      - 8074:80
+    depends_on:
+      - mariadb
+  php80:
+    hostname: php80
+    build: containers/php80
+    env_file: variables.env
+    volumes:
+      - www:/var/www
+      - ssh:/root/.ssh
+      - vscode-server:/root/.vscode-server
+      - ./containers/php80/vhosts:/etc/apache2/vhosts
+    ports:
+      - 8080:80
+    depends_on:
+      - mariadb
+  php81:
+    hostname: php81
+    build: containers/php81
+    env_file: variables.env
+    volumes:
+      - www:/var/www
+      - ssh:/root/.ssh
+      - vscode-server:/root/.vscode-server
+      - ./containers/php81/vhosts:/etc/apache2/vhosts
+    ports:
+      - 8081:80
+    depends_on:
+      - mariadb
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - 3333:3306

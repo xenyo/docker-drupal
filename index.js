@@ -4,24 +4,20 @@ const walkSync = require('walk-sync');
 
 const contexts = [
   {
-    name: 'drupal-php81',
+    name: 'php81',
     php_version: '8.1',
-    apache_port: 8081,
   },
   {
-    name: 'drupal-php80',
+    name: 'php80',
     php_version: '8.0',
-    apache_port: 8080,
   },
   {
-    name: 'drupal-php74',
+    name: 'php74',
     php_version: '7.4',
-    apache_port: 8074,
   },
   {
-    name: 'drupal-php73',
+    name: 'php73',
     php_version: '7.3',
-    apache_port: 8073,
   },
 ];
 
@@ -29,6 +25,6 @@ contexts.forEach(context => {
   walkSync('src', { directories: false }).forEach(file => {
     const template = handlebars.compile(fs.readFileSync(`src/${file}`, 'utf8'));
     const output = template(context);
-    fs.outputFileSync(`${context.name}/${file}`, output, 'utf8');
+    fs.outputFileSync(`containers/${context.name}/${file}`, output, 'utf8');
   });
 });
