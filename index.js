@@ -25,6 +25,6 @@ contexts.forEach(context => {
   walkSync('src', { directories: false }).forEach(file => {
     const template = handlebars.compile(fs.readFileSync(`src/${file}`, 'utf8'));
     const output = template(context);
-    fs.outputFileSync(`containers/${context.name}/${file}`, output, 'utf8');
+    fs.outputFileSync(`${context.name}/${file}`, output, 'utf8');
   });
 });
