@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "watch": "nodemon --watch index.js --watch \"src/**\" -e \"*\" .",
+    "build": "node ."
+  },
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "handlebars": "^4.7.7",
+    "nodemon": "^2.0.22",
+    "walk-sync": "^3.0.0"
+  }
+}
