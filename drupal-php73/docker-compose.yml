@@ -1,8 +1,5 @@
 name: drupal-php73
 
-volumes:
-  www:
-
 services:
   dev:
     hostname: drupal-php73
@@ -12,6 +9,9 @@ services:
     depends_on:
       - apache
   apache:
-    image: httpd
+    build: apache
+    volumes:
+      - ./www:/var/www
+      - ./apache/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
     ports:
       - 8073:80

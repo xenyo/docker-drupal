@@ -1,1 +1,3 @@
 node_modules/
+httpd-vhosts.conf
+.env
