@@ -107,10 +107,10 @@ For example, open `http://example:8081` to confirm everything is set up correctl
 
 | | Apache | MariaDB | SSH |
 | - | - | - | - |
-| drupal-php81 | 8081 | 3081 | 2081 |
-| drupal-php80 | 8080 | 3080 | 2080 |
-| drupal-php74 | 8074 | 3074 | 2074 |
-| drupal-php73 | 8073 | 3073 | 2073 |
+| drupal-php81 | 8081 | 3081 | 2281 |
+| drupal-php80 | 8080 | 3080 | 2280 |
+| drupal-php74 | 8074 | 3074 | 2274 |
+| drupal-php73 | 8073 | 3073 | 2273 |
 
 ## Updating
 
