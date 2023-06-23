@@ -1,7 +1,8 @@
 FROM ubuntu
 
 # Set apt mirror
-RUN sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//mirror:\/\/mirrors.ubuntu.com\/mirrors.txt/' /etc/apt/sources.list
+ARG UBUNTU_MIRROR
+RUN sed -i s#http://archive.ubuntu.com/ubuntu/#$UBUNTU_MIRROR# /etc/apt/sources.list
 
 # Install base packages
 ARG DEBIAN_FRONTEND=noninteractive

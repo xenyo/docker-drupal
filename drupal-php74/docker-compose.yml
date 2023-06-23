@@ -9,8 +9,13 @@ volumes:
 services:
   drupal:
     hostname: drupal-php74
-    build: .
-    env_file: variables.env
+    build:
+      context: .
+      args:
+        UBUNTU_MIRROR: ${UBUNTU_MIRROR:-http://mirror.xtom.com.hk/ubuntu/}
+    environment:
+      GIT_AUTHOR_NAME: ${GIT_AUTHOR_NAME}
+      GIT_AUTHOR_EMAIL: ${GIT_AUTHOR_EMAIL}
     volumes:
       - www:/var/www
       - ssh:/root/.ssh

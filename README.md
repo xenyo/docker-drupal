@@ -20,14 +20,23 @@ A full-featured Docker environment for developing Drupal projects.
 git clone git@github.com:xenyo/docker-drupal.git
 ```
 
-### 2. Create variables.env and enter your personal details
+### 2. Create a .env file and enter your personal details
 
-For example, create `drupal-php81/variables.env`:
+For example, create `drupal-php81/.env`:
 
 ```
 GIT_AUTHOR_NAME=Your Name
 GIT_AUTHOR_EMAIL=example@example.com
 ```
+
+The default mirror is http://mirror.xtom.com.hk/ubuntu/. To use a different
+mirror, add:
+
+```
+UBUNTU_MIRROR=http://your.custom.mirror/ubuntu/
+```
+
+You can choose a mirror from https://launchpad.net/ubuntu/+archivemirrors
 
 ### 3. Build and start the container
 
