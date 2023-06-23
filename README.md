@@ -79,7 +79,7 @@ git clone git@github.com:xenyo/example.git
 
 ### 7. Add virtual hosts
 
-For example, create `drupal-php81/vhosts/example.conf`:
+For example, create `/etc/apache2/sites-available/example.conf`:
 
 ```
 <VirtualHost *:80>
@@ -88,10 +88,11 @@ For example, create `drupal-php81/vhosts/example.conf`:
 </VirtualHost>
 ```
 
-Restart the container for the new virtual hosts to take effect.
+Enable the virtual host and restart apache:
 
 ```
-docker compose restart drupal
+a2ensite example
+service apache2 restart
 ```
 
 ### 8. Edit your hosts file

@@ -5,6 +5,8 @@ volumes:
   ssh:
   vscode-server:
   mysql:
+  sites-available:
+  sites-enabled:
 
 services:
   drupal:
@@ -20,7 +22,8 @@ services:
       - www:/var/www
       - ssh:/root/.ssh
       - vscode-server:/root/.vscode-server
-      - ./vhosts:/etc/apache2/vhosts
+      - sites-available:/etc/apache2/sites-available
+      - sites-enabled:/etc/apache2/sites-enabled
     ports:
       - 8073:80
       - 2273:22
