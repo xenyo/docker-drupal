@@ -114,6 +114,7 @@ RUN echo 'root:root' | chpasswd
 RUN echo 'export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$ "' >> /root/.bashrc
 RUN echo 'umask 0002' >> /root/.bashrc
 RUN echo 'eval "$(direnv hook bash)"' >> /root/.bashrc
+RUN echo 'export DIRENV_LOG_FORMAT=""' >> /root/.bashrc
 RUN usermod -a -G www-data root
 RUN usermod -a -G root www-data
 
