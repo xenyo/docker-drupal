@@ -20,25 +20,7 @@ A full-featured Docker environment for developing Drupal projects.
 git clone git@github.com:xenyo/docker-drupal.git
 ```
 
-### 2. Create a .env file and enter your personal details
-
-For example, create `drupal-php81/.env`:
-
-```
-GIT_AUTHOR_NAME=Your Name
-GIT_AUTHOR_EMAIL=example@example.com
-```
-
-The default mirror is http://mirror.xtom.com.hk/ubuntu/. To use a different
-mirror, add:
-
-```
-UBUNTU_MIRROR=http://your.custom.mirror/ubuntu/
-```
-
-You can choose a mirror from https://launchpad.net/ubuntu/+archivemirrors
-
-### 3. Build and start the container
+### 2. Build and start the container
 
 For example, to start the PHP 8.1 container:
 
@@ -47,13 +29,21 @@ cd drupal-php81
 docker compose up -d
 ```
 
-### 4. Open the container in the terminal
+If the build process gets stuck or takes too long, you may want to try an
+alternative Ubuntu mirror. To do so, select a mirror from
+https://launchpad.net/ubuntu/+archivemirrors and add it to a `.env` file:
+
+```
+UBUNTU_MIRROR=http://your.custom.mirror/ubuntu/
+```
+
+### 3. Open the container in the terminal
 
 ```
 docker compose exec drupal bash
 ```
 
-### 5. Generate SSH keys in the container and add to your GitHub account
+### 4. Generate SSH keys in the container and add to your GitHub account
 
 ```
 ssh-keygen
@@ -68,7 +58,7 @@ cat ~/.ssh/id_rsa.pub
 Copy output to https://github.com/settings/ssh/new
 
 
-### 6. Clone your project to the container
+### 5. Clone your project to the container
 
 For example, to clone a project called `example`:
 
@@ -77,7 +67,7 @@ cd /var/www
 git clone git@github.com:xenyo/example.git
 ```
 
-### 7. Add virtual hosts
+### 6. Add virtual hosts
 
 For example, create `/etc/apache2/sites-available/example.conf`:
 
@@ -95,7 +85,7 @@ a2ensite example
 service apache2 restart
 ```
 
-### 8. Edit your hosts file
+### 7. Edit your hosts file
 
 For example, add the following to your hosts file:
 
@@ -103,7 +93,7 @@ For example, add the following to your hosts file:
 127.0.0.1 example
 ```
 
-### 9. Open the site in the browser
+### 8. Open the site in the browser
 
 For example, open `http://example:8081` to confirm everything is set up correctly.
 
@@ -113,6 +103,15 @@ For example, open `http://example:8081` to confirm everything is set up correctl
 2. Open the Remote Explorer view and select Dev Containers.
 3. Right click your container and select Attach in Current Window.
 
+## Accessing files using a SFTP client
+
+You can connect to the container using a SFTP client such as WinSCP using the
+following credentials:
+
+| Username | Password |
+| - | - |
+| root | root |
+
 ## Default ports
 
 | | Apache | MariaDB | SSH |
@@ -121,6 +120,17 @@ For example, open `http://example:8081` to confirm everything is set up correctl
 | drupal-php80 | 8080 | 3080 | 2280 |
 | drupal-php74 | 8074 | 3074 | 2274 |
 | drupal-php73 | 8073 | 3073 | 2273 |
+
+## Volumes
+
+The following paths are mounted as Docker volumes to preserve data when the container is rebuilt:
+
+| Path | Description |
+| - | - |
+| /var/www | Project source code |
+| /root | Home directory of root user |
+| /etc/apache2/sites-available | Virtual host config files |
+| /etc/apache2/sites-enabled | Enabled virtual hosts |
 
 ## Updating
 
@@ -136,8 +146,6 @@ Rebuild containers. For example, to rebuild the PHP 8.1 container:
 cd drupal-php81
 docker compose up -d --build
 ```
-
-Your project code and database will not be affected.
 
 ## Development
 
