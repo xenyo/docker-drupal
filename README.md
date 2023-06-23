@@ -65,7 +65,7 @@ Keep pressing enter until finished.
 cat ~/.ssh/id_rsa.pub
 ```
 
-Copy output to https://github.com/settings/keys
+Copy output to https://github.com/settings/ssh/new
 
 
 ### 6. Clone your project to the container
