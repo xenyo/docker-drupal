@@ -31,7 +31,10 @@ docker compose up -d
 
 If the build process gets stuck or takes too long, you may want to try an
 alternative Ubuntu mirror. To do so, select a mirror from
-https://launchpad.net/ubuntu/+archivemirrors and add it to a `.env` file:
+https://launchpad.net/ubuntu/+archivemirrors and add it to a `.env` file in the
+same folder as `docker-compose.yml`:
+
+**drupal-php81/.env**
 
 ```
 UBUNTU_MIRROR=http://your.custom.mirror/ubuntu/
@@ -58,7 +61,7 @@ cat ~/.ssh/id_rsa.pub
 Copy output to https://github.com/settings/ssh/new
 
 
-### 5. Clone your project to the container
+### 5. Clone an existing project or create a new project
 
 For example, to clone a project called `example`:
 
@@ -67,9 +70,18 @@ cd /var/www
 git clone git@github.com:xenyo/example.git
 ```
 
+Or to create a new project:
+
+```
+cd /var/www
+composer create-project drupal/recommended-project example
+```
+
 ### 6. Add virtual hosts
 
-For example, create `/etc/apache2/sites-available/example.conf`:
+For example:
+
+**/etc/apache2/sites-available/example.conf**
 
 ```
 <VirtualHost *:80>
@@ -89,32 +101,52 @@ service apache2 restart
 
 For example, add the following to your hosts file:
 
+**C:\Windows\System32\drivers\etc\hosts** (Windows)  
+**/etc/hosts** (Mac, Linux)
+
 ```
 127.0.0.1 example
 ```
 
-### 8. Open the site in the browser
+### 8. Import database (if you have)
 
-For example, open `http://example:8081` to confirm everything is set up correctly.
+Create an empty database:
 
-## Opening the container in VS Code
+```
+mysql -hmariadb
+create database example;
+```
+
+Use an SFTP client to upload your SQL dump to the container (see below).
+
+Import the database:
+
+```
+mysql -hmariadb example < example.sql
+```
+
+### 9. Open the site in the browser
+
+For example, go to http://example:8081 to confirm everything is set up correctly.
+
+## VS Code
 
 1. Install the *Dev Containers* extension.
-2. Open the Remote Explorer view and select Dev Containers.
+2. Open the Remote Explorer view and select Dev Containers at the top of the panel.
 3. Right click your container and select Attach in Current Window.
 
-## Accessing files using a SFTP client
+## SFTP client
 
 You can connect to the container using a SFTP client such as WinSCP using the
 following credentials:
 
-| Username | Password |
-| - | - |
-| root | root |
+| Host | Port | Username | Password |
+| - | - | - | - |
+| localhost | See below | root | root |
 
-## Default ports
+## Ports
 
-| | Apache | MariaDB | SSH |
+| | Apache | MariaDB | SSH/SFTP |
 | - | - | - | - |
 | drupal-php81 | 8081 | 3081 | 2281 |
 | drupal-php80 | 8080 | 3080 | 2280 |
@@ -131,6 +163,37 @@ The following paths are mounted as Docker volumes to preserve data when the cont
 | /root | Home directory of root user |
 | /etc/apache2/sites-available | Virtual host config files |
 | /etc/apache2/sites-enabled | Enabled virtual hosts |
+
+## File permissions
+
+The `root` and `www-data` users have mutual group membership. This means that
+the `root` user is in the `www-data` group and the `www-data` user is in the
+`root` group.
+
+Files in /var/www can be owned by either `root` or `www-data`. Just make sure
+that your files have read and write permissions for user and group. Run the
+following command to fix permissions:
+
+```
+chmod -R ug+rw /var/www
+```
+
+## Drush
+
+To use `drush` in your project without having to type `vendor/bin/drush`, add
+a `.envrc` file to the root of your project. For example:
+
+**/var/www/example/.envrc**
+
+```
+PATH_add vendor/bin
+```
+
+Then allow direnv to load the `.envrc` file:
+
+```
+direnv allow
+```
 
 ## Updating
 
