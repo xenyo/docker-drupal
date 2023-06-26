@@ -16,31 +16,47 @@ A full-featured Docker environment for developing Drupal projects.
 
 ### 1. Clone the repository
 
+Open a terminal and clone this repository to a convenient location:
+
 ```
 git clone git@github.com:xenyo/docker-drupal.git
 ```
 
+`cd` into the repository:
+
+```
+cd docker-drupal
+```
+
 ### 2. Build and start the container
 
-For example, to start the PHP 8.1 container:
+There is a separate folder for each PHP version available. `cd` into the folder
+you want to use:
 
 ```
 cd drupal-php81
+```
+
+Then build and start the container by running this command:
+
+```
 docker compose up -d
 ```
 
-If the build process gets stuck or takes too long, you may want to try an
-alternative Ubuntu mirror. To do so, select a mirror from
-https://launchpad.net/ubuntu/+archivemirrors and add it to a `.env` file in the
-same folder as `docker-compose.yml`:
+> If the build process gets stuck or takes too long, you may want to try an
+> alternative Ubuntu mirror. To do so, select a mirror from
+> https://launchpad.net/ubuntu/+archivemirrors and add it to a `.env` file in the
+> same folder as `docker-compose.yml`:
+> 
+> **drupal-php81/.env**
+> 
+> ```
+> UBUNTU_MIRROR=http://your.custom.mirror/ubuntu/
+> ```
 
-**drupal-php81/.env**
+### 3. Connect to the container in the terminal
 
-```
-UBUNTU_MIRROR=http://your.custom.mirror/ubuntu/
-```
-
-### 3. Open the container in the terminal
+Run this command in the terminal to connect to the container:
 
 ```
 docker compose exec drupal bash
@@ -48,40 +64,49 @@ docker compose exec drupal bash
 
 ### 4. Generate SSH keys in the container and add to your GitHub account
 
+Run this command to generate a public/private key pair:
+
 ```
 ssh-keygen
 ```
 
 Keep pressing enter until finished.
 
+Then, run this command to output your public key:
+
 ```
 cat ~/.ssh/id_rsa.pub
 ```
 
-Copy output to https://github.com/settings/ssh/new
+Copy the entire output to https://github.com/settings/ssh/new
 
 
 ### 5. Clone an existing project or create a new project
 
-For example, to clone a project called `example`:
+For example, run this command to clone a project called `example`:
 
 ```
-cd /var/www
 git clone git@github.com:xenyo/example.git
 ```
 
-Or to create a new project:
+Or run this command to create a new project called `example`:
 
 ```
-cd /var/www
 composer create-project drupal/recommended-project example
 ```
 
-### 6. Add virtual hosts
+### 6. Add a virtual host
 
-For example:
+To add a virtual host to point to your project, create a `.conf` file in
+`/etc/apache2/sites-available`.
 
-**/etc/apache2/sites-available/example.conf**
+For example, run this command to create `example.conf`:
+
+```
+nano /etc/apache2/sites-available/example.conf
+```
+
+Insert the following text:
 
 ```
 <VirtualHost *:80>
@@ -90,36 +115,45 @@ For example:
 </VirtualHost>
 ```
 
-Enable the virtual host and restart apache:
+Then, run this command to enable the virtual host:
 
 ```
 a2ensite example
+```
+
+Then, run this command to restart apache:
+
+```
 service apache2 restart
 ```
 
 ### 7. Edit your hosts file
 
-For example, add the following to your hosts file:
-
-**C:\Windows\System32\drivers\etc\hosts** (Windows)  
-**/etc/hosts** (Mac, Linux)
+Return to the host machine and add the following to your hosts file:
 
 ```
 127.0.0.1 example
 ```
 
+You can find the hosts file at the following path:
+
+| OS | Hosts file |
+| - | - |
+| Windows | C:\Windows\System32\drivers\etc\hosts |
+| Mac, Linux | /etc/hosts |
+
+
 ### 8. Import database (if you have)
 
-Create an empty database:
+Run this command to create an empty database named `example`:
 
 ```
-mysql -hmariadb
-create database example;
+mysql -hmariadb -e "create database example;"
 ```
 
 Use an SFTP client to upload your SQL dump to the container (see below).
 
-Import the database:
+Then run this command to import the database:
 
 ```
 mysql -hmariadb example < example.sql
