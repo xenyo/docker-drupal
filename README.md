@@ -80,96 +80,13 @@ cat ~/.ssh/id_rsa.pub
 
 Copy the entire output to https://github.com/settings/ssh/new
 
-
-### 5. Clone an existing project or create a new project
-
-For example, run this command to clone a project called `example`:
-
-```
-git clone git@github.com:xenyo/example.git
-```
-
-Or run this command to create a new project called `example`:
-
-```
-composer create-project drupal/recommended-project example
-```
-
-### 6. Add a virtual host
-
-To add a virtual host to point to your project, create a `.conf` file in
-`/etc/apache2/sites-available`.
-
-For example, run this command to create `example.conf`:
-
-```
-nano /etc/apache2/sites-available/example.conf
-```
-
-Insert the following text:
-
-```
-<VirtualHost *:80>
-    ServerName example
-    DocumentRoot "/var/www/example/web"
-</VirtualHost>
-```
-
-Then, run this command to enable the virtual host:
-
-```
-a2ensite example
-```
-
-Then, run this command to restart apache:
-
-```
-service apache2 restart
-```
-
-### 7. Edit your hosts file
-
-Return to the host machine and add the following to your hosts file:
-
-```
-127.0.0.1 example
-```
-
-You can find the hosts file at the following path:
-
-| OS | Hosts file |
-| - | - |
-| Windows | C:\Windows\System32\drivers\etc\hosts |
-| Mac, Linux | /etc/hosts |
-
-
-### 8. Import database (if you have)
-
-Run this command to create an empty database named `example`:
-
-```
-mysql -hmariadb -e "create database example;"
-```
-
-Use an SFTP client to upload your SQL dump to the container (see below).
-
-Then run this command to import the database:
-
-```
-mysql -hmariadb example < example.sql
-```
-
-### 9. Open the site in the browser
-
-For example, go to http://example:8081 to confirm everything is set up correctly.
-
-## VS Code
+## Using with VS Code
 
 1. Install the *Dev Containers* extension.
 2. Open the Remote Explorer view and select Dev Containers at the top of the panel.
 3. Right click your container and select Attach in Current Window.
 
-## SFTP client
+## Using with a SFTP client
 
 You can connect to the container using a SFTP client such as WinSCP using the
 following credentials:
@@ -178,7 +95,7 @@ following credentials:
 | - | - | - | - |
 | localhost | See below | root | root |
 
-## Ports
+## Default ports
 
 | | Apache | MariaDB | SSH/SFTP |
 | - | - | - | - |
