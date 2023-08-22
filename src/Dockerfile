@@ -72,6 +72,11 @@ RUN npm config set -g fund false
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer config --global use-parent-dir true
 
+# Install Drush Launcher
+RUN wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar
+RUN chmod +x drush.phar
+RUN mv drush.phar /usr/local/bin/drush
+
 # Set locale
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8

@@ -99,10 +99,10 @@ following credentials:
 
 | | Apache | MariaDB | SSH/SFTP |
 | - | - | - | - |
-| drupal-php81 | 8081 | 3081 | 2281 |
-| drupal-php80 | 8080 | 3080 | 2280 |
-| drupal-php74 | 8074 | 3074 | 2274 |
-| drupal-php73 | 8073 | 3073 | 2273 |
+| drupal-php81 | 8081 | 3381 | 2281 |
+| drupal-php80 | 8080 | 3380 | 2280 |
+| drupal-php74 | 8074 | 3374 | 2274 |
+| drupal-php73 | 8073 | 3373 | 2273 |
 
 ## Volumes
 
