@@ -93,7 +93,8 @@ ENV TZ=Asia/Hong_Kong
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Configure apache
-COPY apache2.conf /etc/apache2/apache2.conf
+COPY apache2.conf /etc/apache2/conf-available/docker.conf
+RUN a2enconf docker
 RUN a2enmod proxy_fcgi
 RUN a2enmod rewrite
 RUN a2enconf php8.0-fpm
