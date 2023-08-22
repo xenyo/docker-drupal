@@ -80,6 +80,10 @@ cat ~/.ssh/id_rsa.pub
 
 Copy the entire output to https://github.com/settings/ssh/new
 
+## Setting up Drupal
+
+See https://github.com/xenyo/articles for guides on how to set up Drupal projects in the container.
+
 ## Using with VS Code
 
 1. Install the *Dev Containers* extension.
@@ -127,23 +131,6 @@ following command to fix permissions:
 
 ```
 chmod -R ug+rw /var/www
-```
-
-## Drush
-
-To use `drush` in your project without having to type `vendor/bin/drush`, add
-a `.envrc` file to the root of your project. For example:
-
-**/var/www/example/.envrc**
-
-```
-PATH_add vendor/bin
-```
-
-Then allow direnv to load the `.envrc` file:
-
-```
-direnv allow
 ```
 
 ## Updating
