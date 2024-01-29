@@ -4,6 +4,13 @@ const walkSync = require('walk-sync');
 
 const contexts = [
   {
+    name: 'drupal-php83',
+    php_version: '8.3',
+    apache_port: 8083,
+    mariadb_port: 3383,
+    ssh_port: 2283,
+  },
+  {
     name: 'drupal-php81',
     php_version: '8.1',
     apache_port: 8081,

@@ -1,0 +1,36 @@
+name: drupal-php83
+
+volumes:
+  www:
+  root:
+  mysql:
+  sites-available:
+  sites-enabled:
+
+services:
+  drupal:
+    hostname: drupal-php83
+    build:
+      context: .
+      args:
+        UBUNTU_MIRROR: ${UBUNTU_MIRROR:-http://mirror.xtom.com.hk/ubuntu/}
+    volumes:
+      - www:/var/www
+      - root:/root
+      - sites-available:/etc/apache2/sites-available
+      - sites-enabled:/etc/apache2/sites-enabled
+    ports:
+      - 8083:80
+      - 2283:22
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+    command: --transaction-isolation=READ-COMMITTED
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - 3383:3306
